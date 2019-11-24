@@ -1,0 +1,82 @@
+{{> nav/nav-block}}
+
+{{!-- <div class="container-fluid home">
+    <div class="row">
+        <div class="col-md-4">
+            {{> sidemenu/sidemenu}}
+        </div>
+        <div class="col-md-10">
+            <h3>Akrivia Automation PVT LTD.</h3>
+            <hr>
+        </div>
+    </div>
+</div> --}}
+
+<h3>Akrivia Automation PVT LTD.</h3>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-3 mt-5">
+            <button class="btn btn-success" onclick="createOptions()">Create</button>
+        </div>
+    </div>
+    <div class="row">
+        {{!-- <div class="col-md-6 text-right">
+            <select multiple id="select1" class="form-control">
+                <option>Windows 10</option>
+                <option>Windows 8</option>
+                <option>Windows 7</option>
+                <option>Windows vista</option>
+                <option>Windows xp</option>
+            </select>
+            <div class="move-container mt-2"></div>
+        </div> --}}
+        <div class="col-md-6">
+            <select name="select2" id="select2" value="" class="form-control">
+                {{!-- <option>Linux</option>
+                <option>Kali Linux</option>
+                <option>Fedora</option>
+                <option>Ubuntu</option>
+                <option>Zorin</option> --}}
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var items = [
+        { key: '11', value: 'aaabs', description: "" },
+        { key: '21', value: 'aa', description: "" },
+        { key: '31', value: 'bssss', description: "" },
+        { key: '41', value: 'bdsss', description: "" },
+        { key: '51', value: 'abbb', description: "" },
+        { key: '61', value: 'aaa', description: "" },
+        { key: '71', value: 'bvbb', description: "" }
+    ];
+
+    function createOptions() {
+        alert("am in to create options");
+        var instance = tail.select("#select2", {
+            descriptions: true,
+            height: 300,
+            width: 250,
+            hideDisabled: false,
+            hideSelected: false,
+            items: items,
+            multiple: true,
+            multiLimit: Infinity,           
+            multiPinSelected: true,        
+            multiContainer: false,  
+            multiShowCount: true,
+            multiShowLimit: true,           
+            multiSelectAll: true,
+            openAbove: null,
+            placeholder: 'Select your choice...',
+            search: true
+        });
+    }
+</script>
+
+{{!-- {{> footer/footer}} --}}

@@ -1,0 +1,125 @@
+{{> nav/nav-block}}
+
+<div class="container">
+    <br>
+    <div class="row">
+        <div class="col-md-6">
+            <form action="/">
+                <div class="form-group">
+                    <select name="cat_id" id="cat_id" value="" class="form-control" onchange="getSubcategories()">
+                        <option value="undefined" disabled>Select category :</option>
+                        {{#catArr}}
+                        <option value="{{cat_id}}" selected="selected">{{category_name}}</option>
+                        {{/catArr}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select name="subcat_id" id="subcat_id" value="" class="form-control" onchange="getReasons()">
+                        <option value="undefined" disabled>Select Subcategory :</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    {{!-- <select name="reason_id" id="reason_id" value="" class="form-control">
+                        <option value="undefined" disabled>Select Reason :</option>
+                    </select> --}}
+                    <select name="reason_id" id="reason_id" value="" class="form-control" multiple>
+                        <option></option>
+                    </select>
+                </div>
+                <button class="btn btn-success" type="submit">Submit</button>
+                {{!-- <button class="btn" id="colourButton">Submit</button> --}}
+            </form>
+        </div>
+    </div>
+</div>
+
+{{> footer/footer}}
+
+
+<script>
+
+    /*document.getElementById("colourButton").style.backgroundColor = "#FF0000";
+    setTimeout("setToBlack()", 5000);
+
+    function setToBlack() {
+        document.getElementById("colourButton").style.backgroundColor = "green";
+    }*/
+
+    function getSubcategories() {
+        $('#subcat_id')
+            .find('option')
+            .remove()
+        /*$('#mySelect')
+            .empty()
+        document.getElementById("subcat_id").options.length = 0;
+        $('#subcat_id')[0].options.length = 0;*/
+        var id = document.getElementById('cat_id').value;
+        console.log("cat_id", id);
+
+        const body = { cat_id: id };
+        fetch('http://localhost:3000/getsubcategories', {
+            method: 'post',
+            body: JSON.stringify(body),
+            headers: { 'Content-Type': 'application/json' },
+        })
+            .then(res => res.json())
+            .then(json => {
+                console.log(JSON.stringify(json));
+                var subcatArr = json.data;
+                console.log(subcatArr);
+                var select = document.getElementById("subcat_id");
+                for (var i = 0; i < subcatArr.length; i++) {
+                    var opt = subcatArr[i].subcategory_name;
+                    var opt1 = subcatArr[i].subcat_id;
+                    var el = document.createElement("option");
+                    el.textContent = opt;
+                    el.value = opt1;
+                    select.appendChild(el);
+                }
+            })
+    }
+
+    function getReasons() {
+        $('#reason_id')
+            .find('option')
+            .remove()
+        var id = document.getElementById('subcat_id').value;
+        console.log("subcat_id", id);
+
+        const body = { subcat_id: id };
+        fetch('http://localhost:3000/getreasons', {
+            method: 'post',
+            body: JSON.stringify(body),
+            headers: { 'Content-Type': 'application/json' },
+        })
+            .then(res => res.json())
+            .then(json => {
+                console.log(JSON.stringify(json));
+                var reasonArr = json.data;
+                console.log(reasonArr);
+                var items = [];
+                for (let i = 0; i < reasonArr.length; i++) {
+                    let obj = {
+                        key: reasonArr[i].reason_id,
+                        value: reasonArr[i].reason_name,
+                        description: ""
+                    }
+                    items.push(obj);
+                }
+                var instance = tail.select("#reason_id", {
+                    descriptions: true,
+                    hideDisabled: false,
+                    hideSelected: false,
+                    items: items,
+                    multiple: true,
+                    multiLimit: Infinity,
+                    multiContainer: true,
+                    multiShowCount: false,
+                    multiSelectAll: true,
+                    placeholder: 'Select Reason :',
+                    search: true
+                });
+            })
+    }
+
+</script>
