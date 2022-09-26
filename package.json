@@ -39,7 +39,7 @@
     "objection": "^1.6.11",
     "pg": "^7.12.1",
     "pg-pool": "^2.0.7",
-    "pm2": "^4.1.2",
+    "pm2": "^5.2.0",
     "request": "^2.88.0",
     "sessionstorage": "^0.1.0",
     "tail.select": "^0.5.15",
